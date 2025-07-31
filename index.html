@@ -215,36 +215,36 @@ let TIPO_LFO3 = "sine";
 
 
 
-let gain1Slider = 70;  // 70% ganancia oscilador 1
-let gain2Slider = 50;  // 50% oscilador 2
-let gain3Slider = 40;  // 40% oscilador 3
+const gain1Slider = 70;  // 70% ganancia oscilador 1
+const gain2Slider = 50;  // 50% oscilador 2
+const gain3Slider = 40;  // 40% oscilador 3
 
-let detuneSlider = 0;     // sin detune oscilador 2
-let detune3Slider = 0;    // sin detune oscilador 3
+const detuneSlider = 0;     // sin detune oscilador 2
+const detune3Slider = 0;    // sin detune oscilador 3
 
 
-let efectFrecSlider = 1000;
+const efectFrecSlider = 1000;
 
-let filterQSlider = 1;       // Q del filtro
+const filterQSlider = 1;       // Q del filtro
 
-let delaySliderVal = 0;      // delay no usado
-let delay3SliderVal = 0;
+const delaySliderVal = 0;      // delay no usado
+const delay3SliderVal = 0;
 
-let leslieSlider = 0;        // LFO Leslie apagado
-let leslieGainSlider = 0;
+const leslieSlider = 0;        // LFO Leslie apagado
+const leslieGainSlider = 0;
 
-let tremoloSlider = 0;       // LFO Tremolo apagado
-let tremoloGainValue = 0;
+const tremoloSlider = 0;       // LFO Tremolo apagado
+const tremoloGainValue = 0;
 
-let LFOFilterValue = 0;      // LFO filtro apagado
-let LFOFilterGainValue = 0;
+const LFOFilterValue = 0;      // LFO filtro apagado
+const LFOFilterGainValue = 0;
 
-let generalGainSlider = document.getElementById("generalGainSlider");
-let filtroSlider = document.getElementById("filtroSlider");
-let attackSlider = document.getElementById("attackSlider");
-let decaySlider = document.getElementById("decaySlider");
-let sustainSlider = document.getElementById("sustainSlider");
-let releaseSlider = document.getElementById("releaseSlider");
+const generalGainSlider = document.getElementById("generalGainSlider");
+const filtroSlider = document.getElementById("filtroSlider");
+const attackSlider = document.getElementById("attackSlider");
+const decaySlider = document.getElementById("decaySlider");
+const sustainSlider = document.getElementById("sustainSlider");
+const releaseSlider = document.getElementById("releaseSlider");
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const mediaDest = audioCtx.createMediaStreamDestination();
@@ -634,64 +634,65 @@ animateVUMeters(); // <-- esto inicia la animación continua
     display.textContent = `Configuración actual: ${configNumber}`;
   }
 
-  function loadConfig(num) {
-    const filename = `config${num}.json`;
-    fetch(filename)
-      .then(res => {
-        if (!res.ok) throw new Error(`No se pudo cargar ${filename}`);
-        return res.json();
-      })
-      .then(data => {
-        // Asignar cada valor del JSON a las variables globales:
-        TIPO_ONDA1 = data.TIPO_ONDA1;
-        TIPO_ONDA2 = data.TIPO_ONDA2;
-        TIPO_ONDA3 = data.TIPO_ONDA3;
-        TIPO_FILTRO = data.TIPO_FILTRO;
+function loadConfig(num) {
+  const filename = `config${num}.json`;
+  fetch(filename)
+    .then(res => {
+      if (!res.ok) throw new Error(`No se pudo cargar ${filename}`);
+      return res.json();
+    })
+    .then(data => {
+      // Actualizar variables y sliders DOM
+      TIPO_ONDA1 = data.TIPO_ONDA1;
+      TIPO_ONDA2 = data.TIPO_ONDA2;
+      TIPO_ONDA3 = data.TIPO_ONDA3;
+      TIPO_FILTRO = data.TIPO_FILTRO;
 
-        delayTimeMs = Number(data.delayTimeMs);
-        delayTime2Ms = Number(data.delayTime2Ms);
-        delayTime3Ms = Number(data.delayTime3Ms);
+      delayTimeMs = Number(data.delayTimeMs);
+      delayTime2Ms = Number(data.delayTime2Ms);
+      delayTime3Ms = Number(data.delayTime3Ms);
 
-        TIPO_LFO1 = data.TIPO_LFO1;
-        TIPO_LFO2 = data.TIPO_LFO2;
-        TIPO_LFO3 = data.TIPO_LFO3;
+      TIPO_LFO1 = data.TIPO_LFO1;
+      TIPO_LFO2 = data.TIPO_LFO2;
+      TIPO_LFO3 = data.TIPO_LFO3;
 
-        generalGainSlider = Number(data.generalGainSlider);
-        filtroSlider = Number(data.filtroSlider);
+      // Actualizar sliders DOM y variables internas
+      generalGainSlider.value = data.generalGainSlider;
+      filtroSlider.value = data.filtroSlider;
 
-        gain1Slider = Number(data.gain1Slider);
-        gain2Slider = Number(data.gain2Slider);
-        gain3Slider = Number(data.gain3Slider);
+      gain1Slider = Number(data.gain1Slider);
+      gain2Slider = Number(data.gain2Slider);
+      gain3Slider = Number(data.gain3Slider);
 
-        detuneSlider = Number(data.detuneSlider);
-        detune3Slider = Number(data.detune3Slider);
+      detuneSlider = Number(data.detuneSlider);
+      detune3Slider = Number(data.detune3Slider);
 
-        attackSlider = Number(data.attackSlider);
-        decaySlider = Number(data.decaySlider);
-        sustainSlider = Number(data.sustainSlider);
-        releaseSlider = Number(data.releaseSlider);
+      attackSlider.value = data.attackSlider;
+      decaySlider.value = data.decaySlider;
+      sustainSlider.value = data.sustainSlider;
+      releaseSlider.value = data.releaseSlider;
 
-        efectFrecSlider = Number(data.efectFrecSlider);
-        filterQSlider = Number(data.filterQSlider);
+      efectFrecSlider = Number(data.efectFrecSlider);
+      filterQSlider = Number(data.filterQSlider);
 
-        delaySliderVal = Number(data.delaySliderVal);
-        delay3SliderVal = Number(data.delay3SliderVal);
+      delaySliderVal = Number(data.delaySliderVal);
+      delay3SliderVal = Number(data.delay3SliderVal);
 
-        leslieSlider = Number(data.leslieSlider);
-        leslieGainSlider = Number(data.leslieGainSlider);
+      leslieSlider = Number(data.leslieSlider);
+      leslieGainSlider = Number(data.leslieGainSlider);
 
-        tremoloSlider = Number(data.tremoloSlider);
-        tremoloGainValue = Number(data.tremoloGainValue);
+      tremoloSlider = Number(data.tremoloSlider);
+      tremoloGainValue = Number(data.tremoloGainValue);
 
-        LFOFilterValue = Number(data.LFOFilterValue);
-        LFOFilterGainValue = Number(data.LFOFilterGainValue);
+      LFOFilterValue = Number(data.LFOFilterValue);
+      LFOFilterGainValue = Number(data.LFOFilterGainValue);
 
-        log.textContent = `Archivo cargado: ${filename}\nDatos:\n` + JSON.stringify(data, null, 2);
-      })
-      .catch(err => {
-        log.textContent = `Error: ${err.message}`;
-      });
-  }
+      log.textContent = `Archivo cargado: ${filename}\nDatos:\n` + JSON.stringify(data, null, 2);
+    })
+    .catch(err => {
+      log.textContent = `Error: ${err.message}`;
+    });
+}
 
   btn.addEventListener('click', () => {
     loadConfig(configNumber);
