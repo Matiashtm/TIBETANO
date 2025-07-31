@@ -109,7 +109,29 @@ label {
   text-shadow: 0 0 5px #00ffff44;
   user-select: none;
 }
-
+  #configNumberDisplay {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #0ff;
+    border: none;
+    border-radius: 6px;
+    color: #111;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0cc;
+  }
+  #log {
+    margin-top: 20px;
+    max-width: 400px;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
 
 
   </style>
@@ -118,7 +140,10 @@ label {
 
   <div class="contenedorPrincipal">
 
-    <button id="loadConfigBtn">Cargar Configuración</button>
+    <div id="configNumberDisplay">Configuración actual: 1</div>
+      <button id="loadConfigBtn">Cargar Configuración</button>
+
+      <div id="log"></div>
 
           <div class="SliderContainer" id="BackVu">  
           <div style="display: flex; gap: 20px;">
@@ -597,10 +622,23 @@ animateVUMeters(); // <-- esto inicia la animación continua
 
 });
 
- document.getElementById('loadConfigBtn').addEventListener('click', () => {
-    fetch('config1.json')
+  let configNumber = 1;
+  const minConfig = 1;
+  const maxConfig = 4;
+
+  const display = document.getElementById('configNumberDisplay');
+  const log = document.getElementById('log');
+  const btn = document.getElementById('loadConfigBtn');
+
+  function updateDisplay() {
+    display.textContent = `Configuración actual: ${configNumber}`;
+  }
+
+  function loadConfig(num) {
+    const filename = `config${num}.json`;
+    fetch(filename)
       .then(res => {
-        if (!res.ok) throw new Error('No se pudo cargar el archivo JSON');
+        if (!res.ok) throw new Error(`No se pudo cargar ${filename}`);
         return res.json();
       })
       .then(data => {
@@ -648,10 +686,32 @@ animateVUMeters(); // <-- esto inicia la animación continua
         LFOFilterValue = Number(data.LFOFilterValue);
         LFOFilterGainValue = Number(data.LFOFilterGainValue);
 
-        console.log("Configuración cargada correctamente:", data);
+        log.textContent = `Archivo cargado: ${filename}\nDatos:\n` + JSON.stringify(data, null, 2);
       })
-      .catch(err => console.error("Error cargando configuración:", err));
+      .catch(err => {
+        log.textContent = `Error: ${err.message}`;
+      });
+  }
+
+  btn.addEventListener('click', () => {
+    loadConfig(configNumber);
   });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      if (configNumber < maxConfig) {
+        configNumber++;
+        updateDisplay();
+      }
+    } else if (e.key === 'ArrowLeft') {
+      if (configNumber > minConfig) {
+        configNumber--;
+        updateDisplay();
+      }
+    }
+  });
+
+  updateDisplay();
 
 
 
