@@ -215,36 +215,36 @@ let TIPO_LFO3 = "sine";
 
 
 
-const gain1Slider = 70;  // 70% ganancia oscilador 1
-const gain2Slider = 50;  // 50% oscilador 2
-const gain3Slider = 40;  // 40% oscilador 3
+let gain1Slider = 70;  // 70% ganancia oscilador 1
+let gain2Slider = 50;  // 50% oscilador 2
+let gain3Slider = 40;  // 40% oscilador 3
 
-const detuneSlider = 0;     // sin detune oscilador 2
-const detune3Slider = 0;    // sin detune oscilador 3
+let detuneSlider = 0;     // sin detune oscilador 2
+let detune3Slider = 0;    // sin detune oscilador 3
 
 
-const efectFrecSlider = 1000;
+let efectFrecSlider = 1000;
 
-const filterQSlider = 1;       // Q del filtro
+let filterQSlider = 1;       // Q del filtro
 
-const delaySliderVal = 0;      // delay no usado
-const delay3SliderVal = 0;
+let delaySliderVal = 0;      // delay no usado
+let delay3SliderVal = 0;
 
-const leslieSlider = 0;        // LFO Leslie apagado
-const leslieGainSlider = 0;
+let leslieSlider = 0;        // LFO Leslie apagado
+let leslieGainSlider = 0;
 
-const tremoloSlider = 0;       // LFO Tremolo apagado
-const tremoloGainValue = 0;
+let tremoloSlider = 0;       // LFO Tremolo apagado
+let tremoloGainValue = 0;
 
-const LFOFilterValue = 0;      // LFO filtro apagado
-const LFOFilterGainValue = 0;
+let LFOFilterValue = 0;      // LFO filtro apagado
+let LFOFilterGainValue = 0;
 
-const generalGainSlider = document.getElementById("generalGainSlider");
-const filtroSlider = document.getElementById("filtroSlider");
-const attackSlider = document.getElementById("attackSlider");
-const decaySlider = document.getElementById("decaySlider");
-const sustainSlider = document.getElementById("sustainSlider");
-const releaseSlider = document.getElementById("releaseSlider");
+let generalGainSlider = document.getElementById("generalGainSlider");
+let filtroSlider = document.getElementById("filtroSlider");
+let attackSlider = document.getElementById("attackSlider");
+let decaySlider = document.getElementById("decaySlider");
+let sustainSlider = document.getElementById("sustainSlider");
+let releaseSlider = document.getElementById("releaseSlider");
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const mediaDest = audioCtx.createMediaStreamDestination();
