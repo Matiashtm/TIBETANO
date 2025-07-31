@@ -1,144 +1,157 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Dos Osciladores con Cutoff y ADSR</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
 
+
+
   <style>
-    body {
-      background: #000;
-      color: #eee;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 15px;
-      user-select: none;
-    }
-    .contenedorPrincipal {
-      width: 95%;
-      max-width: 1200px;
-      background: #111;
-      border: 6px solid #444;
-      border-radius: 14px;
-      padding: 20px 10px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      box-shadow: 0 0 15px #222 inset;
-      flex-direction: row;
-    }
-    .SliderContainer {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      background-color: #121212dd;
-      padding: 12px 8px;
-      border-radius: 10px;
-      width: 80px;
-      box-shadow: 0 0 10px #222 inset;
-      transition: box-shadow 0.3s ease;
-    }
-    .SliderContainer:hover {
-      box-shadow: 0 0 25px #00ffffcc inset;
-    }
-    input[type="range"] {
-      margin-top: 80px;
-      -webkit-appearance: none;
-      appearance: none;
-      width: 150px;
-      height: 12px;
-      background: linear-gradient(90deg, #0ff, #008080);
-      border-radius: 6px;
-      cursor: pointer;
-      transform: rotate(-90deg);
-      outline: none;
-      box-shadow: 0 0 8px #00ffff88;
-      transition: background 0.3s ease;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 24px;
-      height: 36px;
-      background: #00ffff;
-      border-radius: 6px;
-      border: 2px solid #004444;
-      box-shadow: 0 0 12px #00ffffbb;
-      cursor: pointer;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      margin-top: -12px;
-    }
-    input[type="range"]:hover::-webkit-slider-thumb {
-      background: #00ffffee;
-      box-shadow: 0 0 20px #00ffffee;
-    }
-    input[type="range"]::-moz-range-thumb {
-      width: 24px;
-      height: 36px;
-      background: #00ffff;
-      border-radius: 6px;
-      border: 2px solid #004444;
-      box-shadow: 0 0 12px #00ffffbb;
-      cursor: pointer;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-    }
-    input[type="range"]:hover::-moz-range-thumb {
-      background: #00ffffee;
-      box-shadow: 0 0 20px #00ffffee;
-    }
-    label {
-      color: #00ffffcc;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-shadow: 0 0 5px #00ffff44;
-      user-select: none;
-    }
-    #configNumberDisplay {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      background: #0ff;
-      border: none;
-      border-radius: 6px;
-      color: #111;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0cc;
-    }
-    #log {
-      margin-top: 20px;
-      max-width: 400px;
-      white-space: pre-wrap;
-      font-family: monospace;
-      font-size: 0.9rem;
-    }
+  body {
+  background: #000;
+  color: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  user-select: none;
+}
+
+.contenedorPrincipal {
+  width: 95%;
+  max-width: 1200px;
+  background: #111;
+  border: 6px solid #444;
+  border-radius: 14px;
+  padding: 20px 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  box-shadow: 0 0 15px #222 inset;
+  flex-direction: row;
+}
+
+
+.SliderContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background-color: #121212dd;
+  padding: 12px 8px;
+  border-radius: 10px;
+  width: 80px;
+  box-shadow: 0 0 10px #222 inset;
+  transition: box-shadow 0.3s ease;
+}
+.SliderContainer:hover {
+  box-shadow: 0 0 25px #00ffffcc inset;
+}
+
+input[type="range"] {
+  margin-top: 80px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 150px;
+  height: 12px;
+  background: linear-gradient(90deg, #0ff, #008080);
+  border-radius: 6px;
+  cursor: pointer;
+  transform: rotate(-90deg);
+  outline: none;
+  box-shadow: 0 0 8px #00ffff88;
+  transition: background 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 36px;
+  background: #00ffff;
+  border-radius: 6px;
+  border: 2px solid #004444;
+  box-shadow: 0 0 12px #00ffffbb;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  margin-top: -12px;
+}
+input[type="range"]:hover::-webkit-slider-thumb {
+  background: #00ffffee;
+  box-shadow: 0 0 20px #00ffffee;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 36px;
+  background: #00ffff;
+  border-radius: 6px;
+  border: 2px solid #004444;
+  box-shadow: 0 0 12px #00ffffbb;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+input[type="range"]:hover::-moz-range-thumb {
+  background: #00ffffee;
+  box-shadow: 0 0 20px #00ffffee;
+}
+
+label {
+  color: #00ffffcc;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-shadow: 0 0 5px #00ffff44;
+  user-select: none;
+}
+  #configNumberDisplay {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #0ff;
+    border: none;
+    border-radius: 6px;
+    color: #111;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0cc;
+  }
+  #log {
+    margin-top: 20px;
+    max-width: 400px;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+
+
   </style>
 </head>
 <body>
+
   <div class="contenedorPrincipal">
+
     <div id="configNumberDisplay">Configuración actual: 1</div>
-    <button id="loadConfigBtn">Cargar Configuración</button>
+      <button id="loadConfigBtn">Cargar Configuración</button>
 
-    <div id="log"></div>
+      <div id="log"></div>
 
-    <div class="SliderContainer" id="BackVu">  
-      <div style="display: flex; gap: 20px;">
-        <canvas id="vumeter1" width="50" height="300" style="margin-top: -120px;"></canvas>
-      </div>
-    </div>
+          <div class="SliderContainer" id="BackVu">  
+          <div style="display: flex; gap: 20px;">
+               <canvas id="vumeter1" width="50" height="300" style=" margin-top: -120px;"></canvas>
+          </div>
+          </div>
 
-    <div class="SliderContainer" id="generalGainContainer">
+        <div class="SliderContainer" id="generalGainContainer">
       <input id="generalGainSlider" type="range" min="0" max="100" value="50" step="1" />
       <label for="generalGainSlider">General Gain</label>
     </div>
@@ -168,347 +181,542 @@
       <label for="releaseSlider">Release</label>
     </div>
 
-    <div class="SliderContainer" id="BackVu2">  
-      <div style="display: flex; gap: 20px;">
-        <canvas id="vumeter2" width="50" height="300" style="margin-top: -120px;"></canvas>
-      </div>
-    </div>
-  </div>
+
+         <div class="SliderContainer" id="BackVu2">  
+          <div style="display: flex; gap: 20px;">
+               <canvas id="vumeter2" width="50" height="300" style=" margin-top: -120px;"></canvas>
+          </div>
+          </div>
+
+
+
+</div>
 
 <script>
-  // Variables globales para configuración y control de sliders
-  let TIPO_ONDA1 = "square";
-  let TIPO_ONDA2 = "sine";
-  let TIPO_ONDA3 = "sine";
-  let TIPO_FILTRO = "lowpass";
 
-  let delayTimeMs = 0;
-  let delayTime2Ms = 0;
-  let delayTime3Ms = 0;
 
-  let TIPO_LFO1 = "sine";
-  let TIPO_LFO2 = "sine";
-  let TIPO_LFO3 = "sine";
 
-  // Ganancias y detunes (puedes exponerlos a UI si quieres)
-  let gain1Slider = 70;
-  let gain2Slider = 50;
-  let gain3Slider = 40;
 
-  let detuneSlider = 0;
-  let detune3Slider = 0;
 
-  let filterQSlider = 1;
+let TIPO_ONDA1 = "square";
+let TIPO_ONDA2 = "sine";
+let TIPO_ONDA3 = "sine";
+let TIPO_FILTRO = "lowpass";
 
-  let leslieSlider = 0;
-  let leslieGainSlider = 0;
+let delayTimeMs = 0;
+let delayTime2Ms = 0;
+let delayTime3Ms = 0;
 
-  let tremoloSlider = 0;
-  let tremoloGainValue = 0;
+let TIPO_LFO1 = "sine";
+let TIPO_LFO2 = "sine";
+let TIPO_LFO3 = "sine";
 
-  // Elementos DOM sliders
-  const generalGainSlider = document.getElementById("generalGainSlider");
-  const filtroSlider = document.getElementById("filtroSlider");
-  const attackSlider = document.getElementById("attackSlider");
-  const decaySlider = document.getElementById("decaySlider");
-  const sustainSlider = document.getElementById("sustainSlider");
-  const releaseSlider = document.getElementById("releaseSlider");
+// Sliders simulados con valores fijos para que funcione sin DOM
 
-  // Variables para audio
+
+
+const gain1Slider = 70;  // 70% ganancia oscilador 1
+const gain2Slider = 50;  // 50% oscilador 2
+const gain3Slider = 40;  // 40% oscilador 3
+
+const detuneSlider = 0;     // sin detune oscilador 2
+const detune3Slider = 0;    // sin detune oscilador 3
+
+
+const efectFrecSlider = 1000;
+
+const filterQSlider = 1;       // Q del filtro
+
+const delaySliderVal = 0;      // delay no usado
+const delay3SliderVal = 0;
+
+const leslieSlider = 0;        // LFO Leslie apagado
+const leslieGainSlider = 0;
+
+const tremoloSlider = 0;       // LFO Tremolo apagado
+const tremoloGainValue = 0;
+
+const LFOFilterValue = 0;      // LFO filtro apagado
+const LFOFilterGainValue = 0;
+
+const generalGainSlider = document.getElementById("generalGainSlider");
+const filtroSlider = document.getElementById("filtroSlider");
+const attackSlider = document.getElementById("attackSlider");
+const decaySlider = document.getElementById("decaySlider");
+const sustainSlider = document.getElementById("sustainSlider");
+const releaseSlider = document.getElementById("releaseSlider");
+
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const mediaDest = audioCtx.createMediaStreamDestination();
 
-  // Analyser para vumeter
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 256;
 
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
 
-  const canvas1 = document.getElementById('vumeter1');
-  const canvas2 = document.getElementById('vumeter2');
-  const ctx1 = canvas1.getContext('2d');
-  const ctx2 = canvas2.getContext('2d');
+  document.addEventListener("DOMContentLoaded", () => {
 
-  // Función para dibujar vumeter
-  function drawVUMeter(ctx, value) {
-    ctx.clearRect(0, 0, 100, 300);
-    const totalBlocks = 10;
-    const blockHeight = 12;
-    const gap = 3;
 
-    const maxValue = 0.3;
-    const scaledValue = Math.min(value / maxValue, 1);
-    const curvedValue = Math.pow(scaledValue, 0.5);
 
-    const filledBlocks = Math.round(curvedValue * totalBlocks);
+ const keyFreqMap = {
+  // Octava 3
+  a: 261.63,   // C3
+  q: 277.18,   // C#3
+  s: 293.66,   // D3
+  w: 311.13,   // D#3
+  d: 329.63,   // E3
+  f: 349.23,   // F3
+  e: 369.99,   // F#3
+  g: 392.00,   // G3
+  r: 415.30,   // G#3
+  h: 440.00,   // A3
+  t: 466.16,   // A#3
+  j: 493.88,   // B3
 
-    for (let i = 0; i < totalBlocks; i++) {
-      const y = 300 - (i + 1) * (blockHeight + gap);
-      if (i < filledBlocks) {
-        if (i < totalBlocks * 0.3) {
-          ctx.fillStyle = 'lime';
-        } else if (i < totalBlocks * 0.5) {
-          ctx.fillStyle = 'yellow';
-        } else {
-          ctx.fillStyle = 'red';
-        }
-      } else {
-        ctx.fillStyle = '#222';
-      }
-      ctx.fillRect(10, y, 30, blockHeight);
-    }
-  }
+  // Octava 2
+  k: 523.25,   // C2 (en realidad es C4, pero si usás C2 = k, puede que estés usando una octava desplazada)
+  y: 554.37,   // C#2
+  l: 587.33,   // D2
+  u: 622.25,   // D#2
+  'ñ': 659.25, // E2
+  '{': 698.46, // F2 (asumiendo `{` es la tecla correspondiente a `[` en español)
+  i: 739.99,   // F#2
+  '}': 783.99, // G2 (asumiendo `}` es la tecla correspondiente a `]`)
+  o: 830.61,   // G#2
+  z: 880.00,   // A2
+  p: 932.33,   // A#2
+  x: 987.77    // B2
+};
 
-  function animateVUMeters() {
-    requestAnimationFrame(animateVUMeters);
-    analyser.getByteFrequencyData(dataArray);
-
-    let sum = 0;
-    for (let i = 0; i < bufferLength; i++) {
-      sum += dataArray[i];
-    }
-    const average = sum / bufferLength / 256;
-
-    drawVUMeter(ctx1, average);
-    drawVUMeter(ctx2, average);
-  }
-
-  animateVUMeters();
-
-  // Variables para control de nota y pitch bend
-  let freqBase = 440;
-  let pitchBendSemitones = 0;
-  let currentNote = null;
-
-  // Mapa de frecuencias por tecla
-  const keyFreqMap = {
-    a: 261.63, q: 277.18, s: 293.66, w: 311.13, d: 329.63, f: 349.23, e: 369.99,
-    g: 392.00, r: 415.30, h: 440.00, t: 466.16, j: 493.88, k: 523.25, y: 554.37,
-    l: 587.33, u: 622.25, 'ñ': 659.25, '{': 698.46, i: 739.99, '}': 783.99,
-    o: 830.61, z: 880.00, p: 932.33, x: 987.77
-  };
 
   const activeNotes = new Map();
 
-  // startNote: crea y dispara un sonido con 3 osciladores, filtro, ADSR y LFOs
-  function startNote(freq) {
-    const now = audioCtx.currentTime;
-
-    // Validar pitch bend seguro
-    if (typeof pitchBendSemitones !== 'number' || !isFinite(pitchBendSemitones)) {
-      pitchBendSemitones = 0;
+  document.addEventListener("keydown", (e) => {
+    const freq = keyFreqMap[e.key];
+    if (freq && !activeNotes.has(e.key)) {
+      const noteObj = startNote(freq);
+      activeNotes.set(e.key, noteObj);
     }
+  });
 
-    const freqBend = freq * Math.pow(2, pitchBendSemitones / 12);
-    if (!isFinite(freqBend)) return;
+  document.addEventListener("keyup", (e) => {
+    const noteObj = activeNotes.get(e.key);
+    if (noteObj) {
+      stopNote(noteObj);
+      activeNotes.delete(e.key);
+    }
+  });
 
-    // Crear nodos
-    const gain1 = audioCtx.createGain();
-    const gain2 = audioCtx.createGain();
-    const gain3 = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
-    const finalGain = audioCtx.createGain();
 
-    // OSC1
-    let osc1 = audioCtx.createOscillator();
-    osc1.type = TIPO_ONDA1;
-    osc1.frequency.setValueAtTime(freqBend, now);
-    osc1.connect(gain1);
-    osc1.start(now);
+  let freqBase = 440;  // frecuencia base de la nota
+  let pitchBendSemitones = 0;
+  let currentNote = null;
 
-    // OSC2
-    let osc2 = audioCtx.createOscillator();
-    osc2.type = TIPO_ONDA2;
-    osc2.frequency.setValueAtTime(freqBend, now);
-    osc2.detune.setValueAtTime(detuneSlider, now);
-    osc2.connect(gain2);
-    osc2.start(now);
+// Función para iniciar nota con tres osciladores, filtro, ADSR y delay
+function startNote(freq) {
+  freqBase = freq;
+  const now = audioCtx.currentTime;
+  const delaySeconds = delayTimeMs / 1000;
+  const delaySeconds2 = delayTime2Ms / 1000;
+  const delaySeconds3 = delayTime3Ms / 1000;
 
-    // OSC3
-    let osc3 = audioCtx.createOscillator();
-    osc3.type = TIPO_ONDA3;
-    osc3.frequency.setValueAtTime(freqBend, now);
-    osc3.detune.setValueAtTime(detune3Slider, now);
-    osc3.connect(gain3);
-    osc3.start(now);
+  const gain1 = audioCtx.createGain();
+  const gain2 = audioCtx.createGain();
+  const gain3 = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+  const finalGain = audioCtx.createGain();
 
-    // Ganancias individuales
-    gain1.gain.setValueAtTime(gain1Slider / 100, now);
-    gain2.gain.setValueAtTime(gain2Slider / 100, now);
-    gain3.gain.setValueAtTime(gain3Slider / 100, now);
+  let source1, source2, source3;
 
-    // Filtro
-    filter.type = TIPO_FILTRO;
-    filter.frequency.setValueAtTime(parseFloat(filtroSlider.value), now);
-    filter.Q.setValueAtTime(filterQSlider, now);
-
-    // Conectar ganancia de osciladores al filtro
-    gain1.connect(filter);
-    gain2.connect(filter);
-    gain3.connect(filter);
-
-    // ADSR en ganancia final
-    const generalGain = parseFloat(generalGainSlider.value) / 100;
-    const attack = parseFloat(attackSlider.value) / 100;
-    const decay = parseFloat(decaySlider.value) / 100;
-    const sustain = parseFloat(sustainSlider.value) / 100;
-    const release = parseFloat(releaseSlider.value) / 100;
-
-    finalGain.gain.setValueAtTime(0, now);
-    finalGain.gain.linearRampToValueAtTime(generalGain, now + attack);
-    finalGain.gain.linearRampToValueAtTime(generalGain * sustain, now + attack + decay);
-
-    // LFOs - detune (vibrato)
-    const lfoDetune = audioCtx.createOscillator();
-    const lfoDetuneGain = audioCtx.createGain();
-    lfoDetune.frequency.value = leslieSlider;
-    lfoDetuneGain.gain.value = leslieGainSlider;
-    lfoDetune.type = TIPO_LFO1;
-    lfoDetune.connect(lfoDetuneGain);
-    lfoDetuneGain.connect(osc1.detune);
-    lfoDetuneGain.connect(osc2.detune);
-    lfoDetuneGain.connect(osc3.detune);
-    lfoDetune.start(now);
-
-    // LFO tremolo (modulación de volumen)
-    const lfoTremolo = audioCtx.createOscillator();
-    const lfoTremGain = audioCtx.createGain();
-    lfoTremolo.frequency.value = tremoloSlider;
-    lfoTremGain.gain.value = tremoloGainValue * generalGain;
-    lfoTremolo.type = TIPO_LFO2;
-    lfoTremolo.connect(lfoTremGain);
-    lfoTremGain.connect(finalGain.gain);
-    lfoTremolo.start(now);
-
-    // LFO filtro (modulación cutoff)
-    const lfoFilter = audioCtx.createOscillator();
-    const lfoFilterGain = audioCtx.createGain();
-    lfoFilter.frequency.value = LFOFilterValue;
-    lfoFilterGain.gain.value = LFOFilterGainValue;
-    lfoFilter.type = TIPO_LFO3;
-    lfoFilter.connect(lfoFilterGain);
-    lfoFilterGain.connect(filter.frequency);
-    lfoFilter.start(now);
-
-    // Conectar filtro a ganancia final y salida
-    filter.connect(finalGain);
-    finalGain.connect(analyser);
-    analyser.connect(audioCtx.destination);
-
-    // Guardar referencia para parar nota
-    activeNotes.set(freq, {
-      osc1, osc2, osc3,
-      gain1, gain2, gain3,
-      filter, finalGain,
-      lfoDetune, lfoDetuneGain,
-      lfoTremolo, lfoTremGain,
-      lfoFilter, lfoFilterGain
-    });
+  // Validar pitch bend
+  if (typeof pitchBendSemitones !== 'number' || !isFinite(pitchBendSemitones)) {
+    console.warn("pitchBendSemitones inválido, asignando 0");
+    pitchBendSemitones = 0;
   }
 
-  // stopNote con ADSR release
-  function stopNote(freq) {
-    const note = activeNotes.get(freq);
-    if (!note) return;
-    const now = audioCtx.currentTime;
+  const freqBend = freqBase * Math.pow(2, pitchBendSemitones / 12);
+  if (!isFinite(freqBend)) {
+    console.error("freqBend inválida:", freqBend);
+    return;
+  }
 
-    // ADSR release
-    const release = parseFloat(releaseSlider.value) / 100;
-    note.finalGain.gain.cancelScheduledValues(now);
-    note.finalGain.gain.setValueAtTime(note.finalGain.gain.value, now);
-    note.finalGain.gain.linearRampToValueAtTime(0, now + release);
+  // --- OSCILADOR 1 ---
+  if (TIPO_ONDA1 === "noise") {
+    const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate, audioCtx.sampleRate);
+    const output = buffer.getChannelData(0);
+    for (let i = 0; i < buffer.length; i++) output[i] = Math.random() * 2 - 1;
+    source1 = audioCtx.createBufferSource();
+    source1.buffer = buffer;
+    source1.loop = true;
+  } else {
+    source1 = audioCtx.createOscillator();
+    source1.type = TIPO_ONDA1;
+    source1.frequency.setValueAtTime(freqBend, now);
+  }
+  source1.connect(gain1);
+  source1.start(now);
 
-    // Detener osciladores luego del release
-    const stopTime = now + release + 0.05;
-    [note.osc1, note.osc2, note.osc3, note.lfoDetune, note.lfoTremolo, note.lfoFilter].forEach(osc => {
-      if (osc && osc.stop) {
-        try {
-          osc.stop(stopTime);
-        } catch {}
+  // --- OSCILADOR 2 ---
+  if (TIPO_ONDA2 === "noise") {
+    const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate, audioCtx.sampleRate);
+    const output = buffer.getChannelData(0);
+    for (let i = 0; i < buffer.length; i++) output[i] = Math.random() * 2 - 1;
+    source2 = audioCtx.createBufferSource();
+    source2.buffer = buffer;
+    source2.loop = true;
+  } else {
+    source2 = audioCtx.createOscillator();
+    source2.type = TIPO_ONDA2;
+    source2.frequency.setValueAtTime(freqBend, now + delaySeconds2);
+    source2.detune.setValueAtTime(detuneSlider, now + delaySeconds2);
+  }
+  source2.connect(gain2);
+  source2.start(now + delaySeconds2);
+
+  // --- OSCILADOR 3 ---
+  if (TIPO_ONDA3 === "noise") {
+    const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate, audioCtx.sampleRate);
+    const output = buffer.getChannelData(0);
+    for (let i = 0; i < buffer.length; i++) output[i] = Math.random() * 2 - 1;
+    source3 = audioCtx.createBufferSource();
+    source3.buffer = buffer;
+    source3.loop = true;
+  } else {
+    source3 = audioCtx.createOscillator();
+    source3.type = TIPO_ONDA3;
+    source3.frequency.setValueAtTime(freqBend, now + delaySeconds3);
+    source3.detune.setValueAtTime(detune3Slider, now + delaySeconds3);
+  }
+  source3.connect(gain3);
+  source3.start(now + delaySeconds3);
+
+  // --- Ganancias individuales ---
+  gain1.gain.setValueAtTime(gain1Slider / 100, now);
+  gain2.gain.setValueAtTime(gain2Slider / 100, now + delaySeconds2);
+  gain3.gain.setValueAtTime(gain3Slider / 100, now + delaySeconds3);
+
+  // --- Filtro ---
+  filter.type = TIPO_FILTRO;
+  filter.frequency.setValueAtTime(parseFloat(filtroSlider.value), now);
+  filter.Q.setValueAtTime(filterQSlider, now);
+
+
+  // --- ADSR ---
+  // Como tus sliders son números directos, ya no tienen .value, así que usá directamente:
+  const generalGain = parseFloat(generalGainSlider.value) / 100;
+  const attack = parseFloat(attackSlider.value) / 100;
+  const decay = parseFloat(decaySlider.value) / 100;
+  const sustain = parseFloat(sustainSlider.value) / 100;
+  const release = parseFloat(releaseSlider.value) / 100;
+
+  finalGain.gain.setValueAtTime(0, now);
+  finalGain.gain.linearRampToValueAtTime(generalGain, now + attack);
+  finalGain.gain.linearRampToValueAtTime(generalGain * sustain, now + attack + decay);
+
+  // --- LFO Detune (Leslie) ---
+  const lfoDetune = audioCtx.createOscillator();
+  const lfoDetuneGain = audioCtx.createGain();
+  lfoDetune.frequency.value = leslieSlider;
+  lfoDetuneGain.gain.value = leslieGainSlider;
+  lfoDetune.type = TIPO_LFO1;
+  lfoDetune.connect(lfoDetuneGain);
+  if (source1.detune) lfoDetuneGain.connect(source1.detune);
+  if (source2.detune) lfoDetuneGain.connect(source2.detune);
+  if (source3.detune) lfoDetuneGain.connect(source3.detune);
+  lfoDetune.start(now);
+
+  // --- LFO Tremolo (volumen) ---
+  const lfoTremolo = audioCtx.createOscillator();
+  const lfoTremGain = audioCtx.createGain();
+  lfoTremolo.frequency.value = tremoloSlider;
+  lfoTremGain.gain.value = tremoloGainValue * generalGain;
+  lfoTremolo.type = TIPO_LFO2;
+  lfoTremolo.connect(lfoTremGain);
+  lfoTremGain.connect(finalGain.gain);
+  lfoTremolo.start(now);
+
+  // --- LFO Filtro (modulación frecuencia del filtro) ---
+  const lfoFilter = audioCtx.createOscillator();
+  const lfoFilterGain = audioCtx.createGain();
+  lfoFilter.type = TIPO_LFO3;
+  lfoFilter.frequency.value = LFOFilterValue;
+  lfoFilterGain.gain.value = LFOFilterGainValue;
+  lfoFilter.connect(lfoFilterGain);
+  lfoFilterGain.connect(filter.frequency);
+  lfoFilter.start(now);
+
+  // --- Conexión general ---
+  gain1.connect(filter);
+  gain2.connect(filter);
+  gain3.connect(filter);
+  filter.connect(finalGain);
+  finalGain.connect(audioCtx.destination);
+  finalGain.connect(analyser); 
+  finalGain.connect(mediaDest);  // mediaDest para grabación si usás
+
+  // --- Guardar la nota activa ---
+  currentNote = {
+    source1, source2, source3,
+    finalGain, release,
+    lfoDetune, lfoDetuneGain,
+    lfoTremolo, lfoTremGain,
+    lfoFilter, lfoFilterGain
+  };
+
+  return currentNote;
+}
+
+
+
+function stopNote(note) {
+  const now = audioCtx.currentTime;
+  note.finalGain.gain.cancelScheduledValues(now);
+  note.finalGain.gain.setValueAtTime(note.finalGain.gain.value, now);
+  note.finalGain.gain.linearRampToValueAtTime(0, now + note.release);
+
+  try { note.source1.stop(now + note.release + 0.05); } catch (e) {}
+  try { note.source2.stop(now + note.release + 0.05); } catch (e) {}
+  try { note.source3.stop(now + note.release + 0.05); } catch (e) {}
+  try { note.lfoDetune.stop(now + note.release + 0.05); } catch (e) {}
+  try { note.lfoTremolo.stop(now + note.release + 0.05); } catch (e) {}
+  try { note.lfoFilter.stop(now + note.release + 0.05); } catch (e) {}
+}
+
+// Actualizar pitch bend en tiempo real
+function updatePitchBend() {
+  if (!currentNote) return;
+  const bendFreq = freqBase * Math.pow(2, pitchBendSemitones / 12);
+  currentNote.source1.frequency.linearRampToValueAtTime(bendFreq, audioCtx.currentTime + 0.10);
+  currentNote.source2.frequency.linearRampToValueAtTime(bendFreq, audioCtx.currentTime + 0.10);
+  currentNote.source3.frequency.linearRampToValueAtTime(bendFreq, audioCtx.currentTime + 0.10);
+
+}
+
+// Eventos para pitch bend tecla '2'
+window.addEventListener('keydown', (e) => {
+  if (e.key === '2') {
+    pitchBendSemitones = 2;
+    updatePitchBend();
+  }
+});
+
+window.addEventListener('keyup', (e) => {
+  if (e.key === '2') {
+    pitchBendSemitones = 0;
+    updatePitchBend();
+  }
+});
+
+const teclasActivas = new Set(); // Guarda las teclas presionadas
+
+document.addEventListener('keydown', (e) => {
+  if (!currentNote || teclasActivas.has(e.key)) return;
+  teclasActivas.add(e.key);
+
+
+  switch (e.key) {
+    case '4':  // Aplicar trémolo usando valor del slider SliderLFO3
+      currentNote.lfoTremolo.frequency.setValueAtTime(10, audioCtx.currentTime);
+      currentNote.lfoTremGain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      break;
+
+    case '3':  // Aplicar detune
+      currentNote.lfoDetune.frequency.setValueAtTime(10, audioCtx.currentTime);
+      currentNote.lfoDetuneGain.gain.setValueAtTime(40, audioCtx.currentTime);
+      break;
+
+    case '5':  // Aplicar LFO al filtro usando valores de sliders
+      currentNote.lfoFilter.frequency.setValueAtTime(10, audioCtx.currentTime);
+      currentNote.lfoFilterGain.gain.setValueAtTime(2000, audioCtx.currentTime);
+      break;
+
+  }
+  });
+
+document.addEventListener('keyup', (e) => {
+  teclasActivas.delete(e.key); // Quitar la tecla del set cuando se suelta
+
+  if (!currentNote) return;
+
+  switch (e.key) {
+    case '4':  // Quitar trémolo
+      currentNote.lfoTremolo.frequency.setValueAtTime(0, audioCtx.currentTime);
+      currentNote.lfoTremGain.gain.setValueAtTime(0, audioCtx.currentTime);
+      break;
+
+    case '3':  // Quitar detune
+      currentNote.lfoDetune.frequency.setValueAtTime(0, audioCtx.currentTime);
+      currentNote.lfoDetuneGain.gain.setValueAtTime(0, audioCtx.currentTime);
+      break;
+
+    case '5':  // Quitar LFO del filtro
+      currentNote.lfoFilter.frequency.setValueAtTime(0, audioCtx.currentTime);
+      currentNote.lfoFilterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+      break;
+
+
+  }
+});
+
+
+
+// configuración del analyser y canvases
+const analyser = audioCtx.createAnalyser();
+analyser.fftSize = 256;
+
+const bufferLength = analyser.frequencyBinCount;
+const dataArray = new Uint8Array(bufferLength);
+
+
+
+const canvas1 = document.getElementById('vumeter1');
+const canvas2 = document.getElementById('vumeter2');
+const ctx1 = canvas1.getContext('2d');
+const ctx2 = canvas2.getContext('2d');
+
+function drawVUMeter(ctx, value) {
+  ctx.clearRect(0, 0, 100, 300);
+
+  const totalBlocks = 10;
+  const blockHeight = 12;
+  const gap = 3;
+
+  // Aumentar la sensibilidad con una curva exponencial
+  const maxValue = 0.3; // más sensible (antes 0.5)
+  const scaledValue = Math.min(value / maxValue, 1); // escalar entre 0 y 1
+  const curvedValue = Math.pow(scaledValue, 0.5); // raíz cuadrada para respuesta más sensible
+
+  const filledBlocks = Math.round(curvedValue * totalBlocks);
+
+  for (let i = 0; i < totalBlocks; i++) {
+    const y = 300 - (i + 1) * (blockHeight + gap);
+    if (i < filledBlocks) {
+      if (i < totalBlocks * 0.3) {
+        ctx.fillStyle = 'lime'; // Verde
+      } else if (i < totalBlocks * 0.5) {
+        ctx.fillStyle = 'yellow'; // Amarillo
+      } else {
+        ctx.fillStyle = 'red'; // Rojo
       }
+    } else {
+      ctx.fillStyle = '#222'; // fondo apagado
+    }
+
+    ctx.fillRect(10, y, 30, blockHeight);
+  }
+}
+
+
+function animateVUMeters() {
+  requestAnimationFrame(animateVUMeters);
+  analyser.getByteFrequencyData(dataArray);
+
+  let sum = 0;
+  for (let i = 0; i < bufferLength; i++) {
+    sum += dataArray[i];
+  }
+  const average = sum / bufferLength / 256; // valor entre 0 y 1
+
+  drawVUMeter(ctx1, average);
+  drawVUMeter(ctx2, average);
+}
+
+animateVUMeters(); // <-- esto inicia la animación continua
+
+});
+
+  let configNumber = 1;
+  const minConfig = 1;
+  const maxConfig = 4;
+
+  const display = document.getElementById('configNumberDisplay');
+  const log = document.getElementById('log');
+  const btn = document.getElementById('loadConfigBtn');
+
+  function updateDisplay() {
+    display.textContent = `Configuración actual: ${configNumber}`;
+  }
+
+function loadConfig(num) {
+  const filename = `config${num}.json`;
+  fetch(filename)
+    .then(res => {
+      if (!res.ok) throw new Error(`No se pudo cargar ${filename}`);
+      return res.json();
+    })
+    .then(data => {
+      // Actualizar variables y sliders DOM
+      TIPO_ONDA1 = data.TIPO_ONDA1;
+      TIPO_ONDA2 = data.TIPO_ONDA2;
+      TIPO_ONDA3 = data.TIPO_ONDA3;
+      TIPO_FILTRO = data.TIPO_FILTRO;
+
+      delayTimeMs = Number(data.delayTimeMs);
+      delayTime2Ms = Number(data.delayTime2Ms);
+      delayTime3Ms = Number(data.delayTime3Ms);
+
+      TIPO_LFO1 = data.TIPO_LFO1;
+      TIPO_LFO2 = data.TIPO_LFO2;
+      TIPO_LFO3 = data.TIPO_LFO3;
+
+      // Actualizar sliders DOM y variables internas
+      generalGainSlider.value = data.generalGainSlider;
+      filtroSlider.value = data.filtroSlider;
+
+      gain1Slider = Number(data.gain1Slider);
+      gain2Slider = Number(data.gain2Slider);
+      gain3Slider = Number(data.gain3Slider);
+
+      detuneSlider = Number(data.detuneSlider);
+      detune3Slider = Number(data.detune3Slider);
+
+      attackSlider.value = data.attackSlider;
+      decaySlider.value = data.decaySlider;
+      sustainSlider.value = data.sustainSlider;
+      releaseSlider.value = data.releaseSlider;
+
+      efectFrecSlider = Number(data.efectFrecSlider);
+      filterQSlider = Number(data.filterQSlider);
+
+      delaySliderVal = Number(data.delaySliderVal);
+      delay3SliderVal = Number(data.delay3SliderVal);
+
+      leslieSlider = Number(data.leslieSlider);
+      leslieGainSlider = Number(data.leslieGainSlider);
+
+      tremoloSlider = Number(data.tremoloSlider);
+      tremoloGainValue = Number(data.tremoloGainValue);
+
+      LFOFilterValue = Number(data.LFOFilterValue);
+      LFOFilterGainValue = Number(data.LFOFilterGainValue);
+
+      log.textContent = `Archivo cargado: ${filename}\nDatos:\n` + JSON.stringify(data, null, 2);
+    })
+    .catch(err => {
+      log.textContent = `Error: ${err.message}`;
     });
+}
 
-    // Limpiar referencias
-    setTimeout(() => {
-      activeNotes.delete(freq);
-    }, (release + 0.1) * 1000);
-  }
+  btn.addEventListener('click', () => {
+    loadConfig(configNumber);
+  });
 
-  // Eventos de teclado para disparar notas
-  window.addEventListener('keydown', e => {
-    if (e.repeat) return;
-    const key = e.key.toLowerCase();
-    if (keyFreqMap[key] && !activeNotes.has(keyFreqMap[key])) {
-      startNote(keyFreqMap[key]);
-      log(`Nota ON: ${key} (${keyFreqMap[key]} Hz)`);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      if (configNumber < maxConfig) {
+        configNumber++;
+        updateDisplay();
+      }
+    } else if (e.key === 'ArrowLeft') {
+      if (configNumber > minConfig) {
+        configNumber--;
+        updateDisplay();
+      }
     }
   });
 
-  window.addEventListener('keyup', e => {
-    const key = e.key.toLowerCase();
-    if (keyFreqMap[key] && activeNotes.has(keyFreqMap[key])) {
-      stopNote(keyFreqMap[key]);
-      log(`Nota OFF: ${key} (${keyFreqMap[key]} Hz)`);
-    }
-  });
+  updateDisplay();
 
-  // Log simple para mostrar acciones
-  const logDiv = document.getElementById('log');
-  function log(msg) {
-    logDiv.textContent = msg + '\n' + logDiv.textContent;
-  }
 
-  // Actualizar valores sliders a variables (puedes agregar más listeners para otros sliders si quieres)
-  generalGainSlider.addEventListener('input', () => {
-    // Nada extra por ahora
-  });
-  filtroSlider.addEventListener('input', () => {
-    // Nada extra por ahora
-  });
-  attackSlider.addEventListener('input', () => {});
-  decaySlider.addEventListener('input', () => {});
-  sustainSlider.addEventListener('input', () => {});
-  releaseSlider.addEventListener('input', () => {});
 
-  // Botón para cargar una configuración de ejemplo
-  const loadConfigBtn = document.getElementById('loadConfigBtn');
-  loadConfigBtn.addEventListener('click', () => {
-    // Ejemplo de configuración:
-    TIPO_ONDA1 = "square";
-    TIPO_ONDA2 = "triangle";
-    TIPO_ONDA3 = "sine";
-    TIPO_FILTRO = "lowpass";
-
-    gain1Slider = 80;
-    gain2Slider = 40;
-    gain3Slider = 30;
-
-    detuneSlider = 10;
-    detune3Slider = -10;
-
-    filterQSlider = 5;
-
-    leslieSlider = 5;  // LFO detune freq
-    leslieGainSlider = 10; // LFO detune gain
-
-    tremoloSlider = 7;
-    tremoloGainValue = 0.5;
-
-    LFOFilterValue = 1.5;
-    LFOFilterGainValue = 1000;
-
-    generalGainSlider.value = 60;
-    filtroSlider.value = 1500;
-    attackSlider.value = 20;
-    decaySlider.value = 15;
-    sustainSlider.value = 50;
-    releaseSlider.value = 25;
-
-    document.getElementById('configNumberDisplay').textContent = "Configuración actual: 1";
-
-    log("Configuración cargada");
-  });
 </script>
+
 </body>
 </html>
